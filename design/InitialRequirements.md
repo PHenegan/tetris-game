@@ -15,3 +15,8 @@ This is just some of my initial thoughts on design. This is intended to be kind 
 ### Nice to have, but not a priority
 * Being able to store one tetris piece and swap it with the one currently falling
 * Give the player some time before "placing" the tetris piece as it lands, so they can rotate/move it
+
+
+### Multiplayer (?) if it can get coordinated with Matt:
+* Adding rows to the model to add a challenge (the "versus" part of playing online)
+* Maybe a server could be used to update the model, and the clients could just display their respective boards
