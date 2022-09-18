@@ -1,6 +1,4 @@
-mod tetris_model;
-
+mod model;
 
 fn main() {
-    println!("Hello, world!");
 }
