@@ -24,3 +24,8 @@
   - stair_left, stair_right, t, block, line, L_left, L_right
   - However, this tightly links the cell with the number of different block shapes. Is this fine or not? Tetris games typically don't involve different shapes,
 but is it unreasonable to expect that?
+
+
+## Language Notes
+- I originally intended to use Java with either Swing or JavaFX, but I think it would be an interesting opportunity for me to instead do this with Rust and GTK. Some things won't translate as well, but interfaces should be able to become "traits" and implementations of those interfaces could become structs.
+- Overall, even though Rust is a little bit less object oriented, I still think that doing it this way might be a good learning experience.
