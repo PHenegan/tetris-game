@@ -46,14 +46,15 @@ pub trait TetrisModelTrait {
 
 /// Represents an Error describing an attempt to place or access something
 /// outside the boundaries of the grid, with an error message to display
+#[derive(Debug)]
 pub struct OutsideGridError(String);
 
 
 /// Represents the error which occurs when a live tetromino cannot be spawned
 /// `NoRoom` indicates that there is no room for a tetromino to be spawned
 /// `LiveTetrominoExists` indicates that the max number of live tetrominos are already in play
+#[derive(Debug)]
 pub enum SpawnError {
-    NoRoom, // There is no room left for a new tetromino to be spawned
-    LiveTetrominoExists // the maximum number of live tetrominos has already been reached
-
+    NoRoom,
+    LiveTetrominoExists
 }
