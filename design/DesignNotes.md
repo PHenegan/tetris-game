@@ -3,7 +3,7 @@
   Deciding the distinction between the model and controller here is actually surprisingly difficult. For example, what if I wanted to add a power-up system?
   This would be a pretty cool optional feature to have. However, it raises questions about how power-ups would be applied. Take the following 2 examples:
   
-* An anti-gravity powerup, which temporarily reverses the gravity of the board
+* An antigravity powerup, which temporarily reverses the gravity of the board
 * A score-doubling powerup, which doubles the amount added to the score each time points are added.
   * Maybe setScore() and getScore() could be used? though this seams like it's exposing too many implementation details
   * Maybe use some sort of decorator pattern with mutation methods being protected so they can only be used there?
