@@ -12,18 +12,28 @@
 </p>
 
 ### Tetris Grid
-- place a block (group of cells) down somewhere - throw exception if not possible
+- place a tetromino (group of cells/tetris block) down somewhere - throw exception if not possible
+  - I was originally thinking of representing this as it's own class, but now I'm thinking maybe 
+    I don't have to. The only method the trait would have is something to place the cell down,
+    and something else to be able to get the cells in the block. Maybe I could just have
+    Some form of tuple representation?
 - clear a row (removes everything in that row) - throw exception if row is not empty
 - check if a row is full
 - check if a given cell is empty or not
 - get the score of the game
+- Be able to move live Tetromino in any direction. This would allow for "gravity" to be handled
+  by a layer in the controller.
 
 ### Cell
 - probably its own class/interface
 - has some form of type: maybe distinguishing the type of block it came from:
   - stair_left, stair_right, t, block, line, L_left, L_right
-  - However, this tightly links the cell with the number of different block shapes. Is this fine or not? Tetris games typically don't involve different shapes,
-but is it unreasonable to expect that?
+  - However, this tightly links the cell with the number of different block shapes. 
+    Is this fine or not? Tetris games typically don't involve different shapes,
+    but is it unreasonable to expect that?
+    - I guess the enum could be extended, and if cases are properly handled the base game would
+      still work even if a new case was added to the enum.
+
 
 
 ## Language Notes
