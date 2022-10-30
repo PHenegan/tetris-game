@@ -1,2 +1,3 @@
-mod tetris_model_trait;
+mod model_trait;
 mod cell;
+mod tetris_model;

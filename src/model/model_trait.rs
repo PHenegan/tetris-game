@@ -16,18 +16,18 @@ pub trait TetrisModelTrait {
     /// # Arguments
     /// * `row` - the row (0-indexed) of the cell being retrieved
     /// * `col` - the column (0-indexed) of the cell being retrieved
-    fn get_cell(&self, row: &u32, col: &u32) -> Result<&Cell, OutsideGridError>;
+    fn get_cell(&self, row: &usize, col: &usize) -> Result<&Cell, OutsideGridError>;
 
     /// Checks if the given row consists of only empty cells
     ///
     /// # Arguments
     /// * `row` - the row (0-indexed) of the board to check for emptiness
-    fn is_row_empty(&self, row: u32) -> Result<bool, OutsideGridError>;
+    fn is_row_empty(&self, row: &usize) -> Result<bool, OutsideGridError>;
 
     /// Removes the given row from the board by shifting every row above it down
     /// # Arguments
     /// * `row` - the row (0-indexed) of the board to clear
-    fn clear_row(&mut self, row: u32) -> Result<(), OutsideGridError>;
+    fn clear_row(&mut self, row: &usize) -> Result<(), OutsideGridError>;
 
     /// Applies gravity to any live Tetromino(es), placing them down if there is something touching
     /// the bottom (i.e. they can't fall anymore)
@@ -38,16 +38,14 @@ pub trait TetrisModelTrait {
     ///
     /// # Arguments
     /// * `tetromino` - the `Tetromino` pattern to be spawned on the grid
-    fn spawn(&mut self, tetromino: ???) -> Result<(), SpawnError>;
-
-
+    fn spawn(&mut self, tetromino: Vec<Vec<Cell>>) -> Result<(), SpawnError>;
 }
 
 
 /// Represents an Error describing an attempt to place or access something
 /// outside the boundaries of the grid, with an error message to display
 #[derive(Debug)]
-pub struct OutsideGridError(String);
+pub struct OutsideGridError(pub String);
 
 
 /// Represents the error which occurs when a live tetromino cannot be spawned
