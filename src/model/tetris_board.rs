@@ -5,19 +5,18 @@ use crate::model::model_trait::{OutsideGridError, SpawnError, TetrisModelTrait};
 /// Represents a game of Tetris, in which a tetromino can be placed on a grid of cells,
 /// and can be moved downwards until it collides with other blocks. A row can be cleared,
 /// resetting all cells in that row to be empty.
-pub struct TetrisModel {
+pub struct TetrisBoard {
     score:u32,
     grid:Vec<Vec<Cell>>,
 }
 
-impl TetrisModel {
+impl TetrisBoard {
     /// Constructs a tetris grid using the specified width and height for the grid size.
-    pub fn new(width:usize, height:usize) -> TetrisModel {
-        let model = TetrisModel {
+    pub fn new(width:usize, height:usize) -> TetrisBoard {
+        TetrisBoard {
             score: 0,
-            grid: TetrisModel::empty_board(width, height),
-        };
-        return model
+            grid: TetrisBoard::empty_board(width, height),
+        }
     }
     /// creates an empty grid with the specified dimensions
     fn empty_board(width:usize, height:usize) -> Vec<Vec<Cell>> {
@@ -39,7 +38,7 @@ impl TetrisModel {
     }
 }
 
-impl TetrisModelTrait for TetrisModel {
+impl TetrisModelTrait for TetrisBoard {
     fn is_game_over(&self) -> bool {
         todo!()
     }
@@ -73,7 +72,7 @@ impl TetrisModelTrait for TetrisModel {
         else {
             let len = self.grid[*row].len();
             self.grid.remove(*row);
-            self.grid.insert(0, TetrisModel::empty_row(len));
+            self.grid.insert(0, TetrisBoard::empty_row(len));
             Ok(())
         }
     }
