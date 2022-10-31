@@ -1,5 +1,5 @@
-use crate::model::cell::Cell;
-use crate::model::cell::Cell::Empty;
+use crate::model::cell::CellType;
+use crate::model::cell::CellType::Empty;
 use crate::model::model_trait::{OutsideGridError, SpawnError, TetrisModelTrait};
 
 /// Represents a game of Tetris, in which a tetromino can be placed on a grid of cells,
@@ -7,7 +7,7 @@ use crate::model::model_trait::{OutsideGridError, SpawnError, TetrisModelTrait};
 /// resetting all cells in that row to be empty.
 pub struct TetrisBoard {
     score:u32,
-    grid:Vec<Vec<Cell>>,
+    grid:Vec<Vec<CellType>>,
 }
 
 impl TetrisBoard {
@@ -19,8 +19,8 @@ impl TetrisBoard {
         }
     }
     /// creates an empty grid with the specified dimensions
-    fn empty_board(width:usize, height:usize) -> Vec<Vec<Cell>> {
-        let mut result:Vec<Vec<Cell>> = vec!();
+    fn empty_board(width:usize, height:usize) -> Vec<Vec<CellType>> {
+        let mut result:Vec<Vec<CellType>> = vec!();
         for row in 0..height {
             result.push(vec!());
             for _col in 0..width {
@@ -29,7 +29,7 @@ impl TetrisBoard {
         }
         return result;
     }
-    fn empty_row(width:usize) -> Vec<Cell> {
+    fn empty_row(width:usize) -> Vec<CellType> {
         let mut result = vec!();
         for _i in 0..width {
             result.push(Empty);
@@ -47,7 +47,7 @@ impl TetrisModelTrait for TetrisBoard {
         self.score
     }
 
-    fn get_cell(&self, row: &usize, col: &usize) -> Result<&Cell, OutsideGridError> {
+    fn get_cell(&self, row: &usize, col: &usize) -> Result<&CellType, OutsideGridError> {
         if *row >= self.grid.len() || *col >= self.grid[0].len() {
             Err(OutsideGridError(String::from("{*row}, {*col} is outside of the grid range.")))
         }
@@ -81,7 +81,7 @@ impl TetrisModelTrait for TetrisBoard {
         todo!()
     }
 
-    fn spawn(&mut self, tetromino: Vec<Vec<Cell>>) -> Result<(), SpawnError> {
+    fn spawn(&mut self, tetromino: Vec<Vec<CellType>>) -> Result<(), SpawnError> {
         todo!()
     }
 }
