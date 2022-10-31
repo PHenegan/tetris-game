@@ -1,4 +1,4 @@
-use crate::model::cell::Cell;
+use crate::model::cell::CellType;
 
 /// A TetrisModelState represents the board for a game of tetris, a game where tetris blocks
 /// (Tetrominoes) fall from the top of a grid and are stacked until pieces can no longer be placed
@@ -16,7 +16,7 @@ pub trait TetrisModelTrait {
     /// # Arguments
     /// * `row` - the row (0-indexed) of the cell being retrieved
     /// * `col` - the column (0-indexed) of the cell being retrieved
-    fn get_cell(&self, row: &usize, col: &usize) -> Result<&Cell, OutsideGridError>;
+    fn get_cell(&self, row: &usize, col: &usize) -> Result<&CellType, OutsideGridError>;
 
     /// Checks if the given row consists of only empty cells
     ///
@@ -38,7 +38,7 @@ pub trait TetrisModelTrait {
     ///
     /// # Arguments
     /// * `tetromino` - the `Tetromino` pattern to be spawned on the grid
-    fn spawn(&mut self, tetromino: Vec<Vec<Cell>>) -> Result<(), SpawnError>;
+    fn spawn(&mut self, tetromino: Vec<Vec<CellType>>) -> Result<(), SpawnError>;
 }
 
 

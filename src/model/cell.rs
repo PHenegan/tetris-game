@@ -1,5 +1,5 @@
 #[derive(PartialEq)]
-pub enum Cell {
+pub enum CellType {
     Block,
     Line,
     ZigZag,
