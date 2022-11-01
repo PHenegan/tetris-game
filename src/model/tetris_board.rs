@@ -8,6 +8,7 @@ use crate::model::model_trait::{OutsideGridError, SpawnError, TetrisModelTrait};
 pub struct TetrisBoard {
     score:u32,
     grid:Vec<Vec<CellType>>,
+    tetromino:Vec<Vec<CellType>>,
 }
 
 impl TetrisBoard {
@@ -16,6 +17,7 @@ impl TetrisBoard {
         TetrisBoard {
             score: 0,
             grid: TetrisBoard::empty_board(width, height),
+            tetromino: vec!()
         }
     }
     /// creates an empty grid with the specified dimensions
@@ -29,6 +31,8 @@ impl TetrisBoard {
         }
         return result;
     }
+
+    /// Creates an empty row using the specified dimension
     fn empty_row(width:usize) -> Vec<CellType> {
         let mut result = vec!();
         for _i in 0..width {
@@ -39,10 +43,6 @@ impl TetrisBoard {
 }
 
 impl TetrisModelTrait for TetrisBoard {
-    fn is_game_over(&self) -> bool {
-        todo!()
-    }
-
     fn get_score(&self) -> u32 {
         self.score
     }
@@ -73,7 +73,7 @@ impl TetrisModelTrait for TetrisBoard {
             let len = self.grid[*row].len();
             self.grid.remove(*row);
             self.grid.insert(0, TetrisBoard::empty_row(len));
-            Ok(())
+            return Ok(());
         }
     }
 
@@ -81,7 +81,31 @@ impl TetrisModelTrait for TetrisBoard {
         todo!()
     }
 
-    fn spawn(&mut self, tetromino: Vec<Vec<CellType>>) -> Result<(), SpawnError> {
+    fn can_spawn(&self, tetromino: Vec<Vec<CellType>>, col: usize) -> bool {
+        // Iterates through each row of the tetromino and ensures that the corresponding grid
+        // position does not contain any empty cells.
+        for t_row in 0..tetromino.len() {
+            // Iterates through each column of the tetromino and ensures that there is no cell
+            // in that spot on the board.
+            for t_col in 0..tetromino[row].len() {
+                let col = col + t_col;
+                if col > tetromino[row].len()
+                    || (tetromino[row][col] != Empty && self.grid[t_row][col] != Empty) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    fn spawn(&mut self, tetromino: Vec<Vec<CellType>>, col:usize) -> Result<(), SpawnError> {
+        if self.tetromino.is_empty() {
+            return Err(SpawnError::LiveTetrominoExists);
+        }
+        else if !self.can_spawn(tetromino, col) {
+            return Err(SpawnError::NoRoom);
+        }
+
         todo!()
     }
 }

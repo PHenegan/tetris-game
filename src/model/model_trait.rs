@@ -3,10 +3,6 @@ use crate::model::cell::CellType;
 /// A TetrisModelState represents the board for a game of tetris, a game where tetris blocks
 /// (Tetrominoes) fall from the top of a grid and are stacked until pieces can no longer be placed
 pub trait TetrisModelTrait {
-
-    /// Returns a boolean representing whether or not the tetris game has ended.
-    fn is_game_over(&self) -> bool;
-
     /// Returns the score of the game.
     fn get_score(&self) -> u32;
 
@@ -33,12 +29,20 @@ pub trait TetrisModelTrait {
     /// the bottom (i.e. they can't fall anymore)
     fn update(&mut self);
 
+    /// Returns a boolean representing whether or not the given tetromino can be placed
+    /// at the top of the board at the given column
+    /// # Arguments
+    /// * `tetromino` - a 2D grid of cells representing the tetromino to be spawned
+    /// * `col` - the column for the top-left corner of the tetromino at on the board (0-indexed)
+    fn can_spawn(&self, tetromino: Vec<Vec<CellType>>, col: usize) -> bool;
+
     /// Spawns a new live tetromino at the top of the board, returns an error if the tetromino
     /// could not be spawned (there is no room on the grid, or there is already a live tetromino
     ///
     /// # Arguments
     /// * `tetromino` - the `Tetromino` pattern to be spawned on the grid
-    fn spawn(&mut self, tetromino: Vec<Vec<CellType>>) -> Result<(), SpawnError>;
+    /// * `col` - the column to place the top left cell of the tetromino at.
+    fn spawn(&mut self, tetromino: Vec<Vec<CellType>>, col:usize) -> Result<(), SpawnError>;
 }
 
 
