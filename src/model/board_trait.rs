@@ -2,9 +2,15 @@ use crate::model::cell::CellType;
 
 /// A TetrisModelState represents the board for a game of tetris, a game where tetris blocks
 /// (Tetrominoes) fall from the top of a grid and are stacked until pieces can no longer be placed
-pub trait TetrisModelTrait {
+pub trait ITetrisBoard {
     /// Returns the score of the game.
     fn get_score(&self) -> u32;
+
+    /// Returns the length of the board (number of cells)
+    fn width(&self) -> usize;
+
+    /// Returns the height of the board (number of cells)
+    fn height(&self) -> usize;
 
     /// Gets the cell on the board at the position indicated by the given row and column
     /// If the given row and column is out of bounds, an error will be thrown.
@@ -20,6 +26,12 @@ pub trait TetrisModelTrait {
     /// * `row` - the row (0-indexed) of the board to check for emptiness
     fn is_row_empty(&self, row: &usize) -> Result<bool, OutsideGridError>;
 
+    /// Checks if the given row is filled with blocks
+    ///
+    /// # Arguments
+    /// * `row` the row (0-indexed) of the board to check
+    fn is_row_full(&self, row: &usize) -> Result<bool, OutsideGridError>;
+
     /// Removes the given row from the board by shifting every row above it down
     /// # Arguments
     /// * `row` - the row (0-indexed) of the board to clear
@@ -34,7 +46,7 @@ pub trait TetrisModelTrait {
     /// # Arguments
     /// * `tetromino` - a 2D grid of cells representing the tetromino to be spawned
     /// * `col` - the column for the top-left corner of the tetromino at on the board (0-indexed)
-    fn can_spawn(&self, tetromino: Vec<Vec<CellType>>, col: usize) -> bool;
+    fn can_spawn(&self, tetromino: &Vec<Vec<CellType>>, col: usize) -> bool;
 
     /// Spawns a new live tetromino at the top of the board, returns an error if the tetromino
     /// could not be spawned (there is no room on the grid, or there is already a live tetromino
@@ -51,6 +63,9 @@ pub trait TetrisModelTrait {
 #[derive(Debug)]
 pub struct OutsideGridError(pub String);
 
+#[derive(Debug)]
+pub struct CellExistsError(pub String);
+
 
 /// Represents the error which occurs when a live tetromino cannot be spawned
 /// `NoRoom` indicates that there is no room for a tetromino to be spawned
@@ -59,4 +74,9 @@ pub struct OutsideGridError(pub String);
 pub enum SpawnError {
     NoRoom,
     LiveTetrominoExists
+}
+
+pub enum PlaceError {
+    OutsideGrid(OutsideGridError),
+    CellExists(CellExistsError)
 }
