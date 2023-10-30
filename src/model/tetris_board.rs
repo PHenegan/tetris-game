@@ -58,7 +58,7 @@ impl TetrisBoard {
                 let row = self.tetromino_pos.0 + t_row;
                 let col = self.tetromino_pos.1 + t_col;
 
-                if row < 0 || row > self.grid.len() || col < 0 || col > self.grid[row].len() {
+                if row > self.grid.len() || col > self.grid[row].len() {
                     return Err(OutsideGrid(OutsideGridError(
                         String::from("{row}, {col} is outside of the grid range.")
                     )));
@@ -87,7 +87,6 @@ impl ITetrisBoard for TetrisBoard {
     fn height(&self) -> usize {
         self.grid.len()
     }
-
 
     fn get_cell(&self, row: &usize, col: &usize) -> Result<&CellType, OutsideGridError> {
         if *row >= self.height() || *col >= self.width() {
